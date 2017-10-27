@@ -44,7 +44,7 @@ def getCard(card_idx):
 
 		# if idx==0 is a short edge then we need to swap these elements to make sure the mapping is correct
 
-		# cv2.line(img, (approx[idx][0],approx[idx][1]), (approx[idx_2][0],approx[idx_2][1]), color, 2)
+		cv2.line(img, (approx[idx][0],approx[idx][1]), (approx[idx_2][0],approx[idx_2][1]), color, 2)
 
 	approx = np.float32(approx)
 
@@ -56,7 +56,7 @@ def getCard(card_idx):
 	return warp
 
 
-img = cv2.imread("SetCards.jpg")
+img = cv2.imread("SetCards3.jpg")
 
 orig_img = img.copy()
 
@@ -73,39 +73,12 @@ contours = contours[:num_cards]
 
 cv2.drawContours(img, contours, -1, (255,0,0), 2)
 
-for x in range(0, num_cards):
-	cv2.imwrite("card_" + str(x) +".jpg", getCard(x))
+# for x in range(0, num_cards):
+# 	cv2.imwrite("card_" + str(x) +".jpg", getCard(x))
 
 # cv2.imwrite("card.jpg", warp)
 
+img = cv2.resize(img, (600, 540))
 cv2.imshow('image', img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-
-# # Capture frame-by-frame
-# ret, frame = cap.read()
-
-# # Our operations on the frame come here
-# gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-# blur = cv2.GaussianBlur(gray,(1,1),1000)
-
-# flag, thresh = cv2.threshold(blur, 120, 255, cv2.THRESH_BINARY)
-
-# contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-
-# contours = sorted(contours, key=cv2.contourArea, reverse=True)
-
-# # card = contours[0]
-# # peri = cv2.arcLength(card, True)
-# # approx = cv2.approxPolyDP(card,0.02*peri,True)
-
-# 	cv2.drawContours(frame, contours[0], -1, (255,0,0), 3)
-
-# # Display the resulting frame
-# cv2.imshow('dst',frame)
-# if cv2.waitKey(1) & 0xFF == ord('q'):
-# 	break
-
-# # When everything done, release the capture
-# cv2.destroyAllWindows()
