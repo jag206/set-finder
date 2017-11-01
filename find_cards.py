@@ -17,6 +17,9 @@ def correct(rect):
 
 	return rect
 
+def saveCard(filename, card):
+	cv2.imwrite(filename, card)
+
 def getCard(card_idx):
 
 	card = contours[card_idx]
@@ -44,7 +47,7 @@ def getCard(card_idx):
 
 		# if idx==0 is a short edge then we need to swap these elements to make sure the mapping is correct
 
-		cv2.line(img, (approx[idx][0],approx[idx][1]), (approx[idx_2][0],approx[idx_2][1]), color, 2)
+		# cv2.line(img, (approx[idx][0],approx[idx][1]), (approx[idx_2][0],approx[idx_2][1]), color, 2)
 
 	approx = np.float32(approx)
 
@@ -56,14 +59,14 @@ def getCard(card_idx):
 	return warp
 
 
-img = cv2.imread("SetCards3.jpg")
+img = cv2.imread("SetCards1.jpg")
 
 orig_img = img.copy()
 
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 blur = cv2.GaussianBlur(gray,(3,3),1000)
 
-flag, thresh = cv2.threshold(blur, 120, 255, cv2.THRESH_BINARY)
+flag, thresh = cv2.threshold(blur, 120, 250, cv2.THRESH_BINARY)
 
 contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
@@ -74,9 +77,9 @@ contours = contours[:num_cards]
 cv2.drawContours(img, contours, -1, (255,0,0), 2)
 
 # for x in range(0, num_cards):
-# 	cv2.imwrite("card_" + str(x) +".jpg", getCard(x))
-
-# cv2.imwrite("card.jpg", warp)
+# 	# identify each card
+# 	detected_card = getCard(x)
+# 	saveCard("card_" + str(x) +".jpg", detected_card)
 
 img = cv2.resize(img, (600, 540))
 cv2.imshow('image', img)
