@@ -65,7 +65,6 @@ orig_img = img.copy()
 
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 blur = cv2.GaussianBlur(gray,(3,3),1000)
-
 flag, thresh = cv2.threshold(blur, 120, 250, cv2.THRESH_BINARY)
 
 contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
