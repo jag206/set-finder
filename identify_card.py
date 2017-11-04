@@ -7,9 +7,21 @@ def enum(**named_values):
 	return type('Enum', (), named_values)
 
 Color = enum(RED='red', GREEN='green', BLUE='blue')
+Shape = enum(SQUIGGLE='squiggle', DIAMOND='diamond', PILL='pill')
+no_value = 'none'
 
 def doNothing(x):
 	pass
+
+def assignShape(contour_area):
+	if contour_area > 27000 and contour_area < 30000:
+		return Shape.DIAMOND
+	if contour_area > 32000 and contour_area < 38000:
+		return Shape.SQUIGGLE
+	if contour_area > 44000 and contour_area < 50000:
+		return Shape.PILL
+
+	return no_value
 
 def getColour(img):
 	# reshape into a linear array
@@ -42,18 +54,42 @@ def getColour(img):
 	return "Unknown Color"
 
 def getNumber(img):
-	img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	blur = cv2.GaussianBlur(gray,(5,5),0)
 
-	edges = cv2.Canny(img, 80, 180)
-	cv2.imshow('image', edges)
+	thresh = cv2.adaptiveThreshold(blur, 300, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21,0)
+
+	contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+
+	contours = sorted(contours, key = cv2.contourArea, reverse=True)
+
+	contours = contours[:10]
+
+	shapes = list()
+
+	for contour in contours:
+		print cv2.contourArea(contour)
+		shapes.append(assignShape(cv2.contourArea(contour)))
+
+	shapes = filter(lambda a: a != no_value, shapes)
+	# get the top 3 shapes
+	shapes = shapes[:3]
+	print shapes
+
+	cv2.drawContours(img, contours, -1, (255,0,0), 2)
+
+	cv2.imshow('image', img)
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
 
 	return "Unknown Shape"
 
-# use this function to tune the parameters for the canny edge detection on a few cards
+# use this function to tune the parameters for the contours on a few cards
 def getNumberTest(img):
-	img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	# equ = cv2.equalizeHist(gray)
+	blur = cv2.GaussianBlur(gray,(5,5),0)
+
 	cv2.namedWindow('image')
 
 	cv2.createTrackbar('min', 'image', 0, 500, doNothing)
@@ -63,8 +99,9 @@ def getNumberTest(img):
 	max = 0
 
 	while(1):
-		edges = cv2.Canny(img, min, max)
-		cv2.imshow('image', edges)
+		thresh = cv2.adaptiveThreshold(blur, max, cv2.
+			ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21,min)
+		cv2.imshow('image', thresh)
 
 		k = cv2.waitKey(1) & 0xFF
 		if k == 27:
@@ -83,10 +120,19 @@ def resizeImage(img):
 # let us assume we have the picture and now we want to classify what it actually is
 
 # read in the file
-# img = cv2.imread('card_1.jpg')
+# img = cv2.imread('card_10.jpg')
 # img = cv2.imread('card_0.jpg')
+# img = cv2.imread('card_1.jpg')
+# img = cv2.imread('card_2.jpg')
+# img = cv2.imread('card_3.jpg')
 # img = cv2.imread('card_4.jpg')
-img = cv2.imread('card_8.jpg')
+img = cv2.imread('card_5.jpg')
+# img = cv2.imread('card_6.jpg')
+# img = cv2.imread('card_7.jpg')
+# img = cv2.imread('card_8.jpg')
+# img = cv2.imread('card_9.jpg')
+# img = cv2.imread('card_10.jpg')
+# img = cv2.imread('card_11.jpg')
 # img=cv2.imread('training_pics/3_h_b_s.jpg')
 
 resized = resizeImage(img)

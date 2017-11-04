@@ -89,20 +89,20 @@ def findSet(cards):
 
 cards = list()
 
-cards.append(Card(3, Shading.SOLID, Color.BLUE, Shape.SQUIGGLE))
-cards.append(Card(1, Shading.SOLID, Color.BLUE, Shape.DIAMOND))
-cards.append(Card(1, Shading.SOLID, Color.BLUE, Shape.SQUIGGLE))
+cards.append(Card(3, Shading.EMPTY, Color.BLUE, Shape.DIAMOND))
+cards.append(Card(2, Shading.EMPTY, Color.GREEN, Shape.DIAMOND))
+cards.append(Card(1, Shading.EMPTY, Color.RED, Shape.DIAMOND))
 
-cards.append(Card(2, Shading.HASHED, Color.BLUE, Shape.PILL))
-cards.append(Card(2, Shading.SOLID, Color.RED, Shape.PILL))
+cards.append(Card(3, Shading.SOLID, Color.BLUE, Shape.DIAMOND))
+cards.append(Card(3, Shading.SOLID, Color.RED, Shape.SQUIGGLE))
+cards.append(Card(1, Shading.HASHED, Color.GREEN, Shape.PILL))
+
+cards.append(Card(2, Shading.SOLID, Color.RED, Shape.DIAMOND))
+cards.append(Card(3, Shading.EMPTY, Color.BLUE, Shape.PILL))
 cards.append(Card(3, Shading.SOLID, Color.BLUE, Shape.PILL))
 
-cards.append(Card(2, Shading.EMPTY, Color.RED, Shape.PILL))
-cards.append(Card(1, Shading.HASHED, Color.GREEN, Shape.PILL))
-cards.append(Card(3, Shading.HASHED, Color.BLUE, Shape.PILL))
-
-cards.append(Card(1, Shading.SOLID, Color.BLUE, Shape.PILL))
-cards.append(Card(1, Shading.HASHED, Color.RED, Shape.PILL))
-cards.append(Card(3, Shading.HASHED, Color.BLUE, Shape.DIAMOND))
+cards.append(Card(1, Shading.SOLID, Color.GREEN, Shape.PILL))
+cards.append(Card(1, Shading.EMPTY, Color.BLUE, Shape.PILL))
+cards.append(Card(2, Shading.HASHED, Color.RED, Shape.DIAMOND))
 
 findSet(cards)

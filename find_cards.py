@@ -59,7 +59,7 @@ def getCard(card_idx):
 	return warp
 
 
-img = cv2.imread("SetCards1.jpg")
+img = cv2.imread("SetCards5.jpg")
 
 orig_img = img.copy()
 
@@ -75,10 +75,10 @@ contours = contours[:num_cards]
 
 cv2.drawContours(img, contours, -1, (255,0,0), 2)
 
-# for x in range(0, num_cards):
-# 	# identify each card
-# 	detected_card = getCard(x)
-# 	saveCard("card_" + str(x) +".jpg", detected_card)
+for x in range(0, num_cards):
+	# identify each card
+	detected_card = getCard(x)
+	saveCard("card_" + str(x) +".jpg", detected_card)
 
 img = cv2.resize(img, (600, 540))
 cv2.imshow('image', img)
